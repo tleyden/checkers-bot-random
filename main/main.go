@@ -6,13 +6,13 @@ import (
 	cbotrandom "github.com/tleyden/checkers-bot-random"
 )
 
-func main() {
-
+func init() {
 	logg.LogKeys["MAIN"] = true
+}
 
-	randomThinker := new(cbotrandom.RandomThinker)
-	redTeam := cbot.RED_TEAM
-	game := cbot.NewGame(redTeam, randomThinker)
+func main() {
+	thinker := new(cbotrandom.RandomThinker)
+	thinker.ourTeamId = cbot.RED_TEAM
+	game := cbot.NewGame(cbot.RED_TEAM, thinker)
 	game.GameLoop()
-
 }

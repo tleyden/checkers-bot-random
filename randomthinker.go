@@ -9,14 +9,18 @@ type RandomThinker struct {
 	ourTeamId int
 }
 
-func (r RandomThinker) Think(gameState cbot.GameState) (bestMove cbot.ValidMove) {
-	bestMove = cbot.ValidMove{}
+func (r RandomThinker) Think(gameState cbot.GameState) (bestMove cbot.ValidMove, ok bool) {
+
+	ok = true
 	ourTeam := gameState.Teams[r.ourTeamId]
 	allValidMoves := ourTeam.AllValidMoves()
 	if len(allValidMoves) > 0 {
 		randomValidMoveIndex := cbot.RandomIntInRange(0, len(allValidMoves))
 		bestMove = allValidMoves[randomValidMoveIndex]
+	} else {
+		ok = false
 	}
+
 	return
 }
 

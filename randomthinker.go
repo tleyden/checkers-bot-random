@@ -1,11 +1,23 @@
-package checkers_bot_random
+package main
 
 import (
+	"github.com/couchbaselabs/logg"
 	cbot "github.com/tleyden/checkers-bot"
 )
 
 type RandomThinker struct {
 	ourTeamId int
+}
+
+func init() {
+	logg.LogKeys["MAIN"] = true
+}
+
+func main() {
+	thinker := &RandomThinker{}
+	thinker.ourTeamId = cbot.RED_TEAM
+	game := cbot.NewGame(cbot.RED_TEAM, thinker)
+	game.GameLoop()
 }
 
 func (r RandomThinker) Think(gameState cbot.GameState) (bestMove cbot.ValidMove) {

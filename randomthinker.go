@@ -25,5 +25,6 @@ func main() {
 	thinker := &RandomThinker{}
 	thinker.ourTeamId = cbot.RED_TEAM
 	game := cbot.NewGame(cbot.RED_TEAM, thinker)
+	game.SetDelayBeforeMove(true)
 	game.GameLoop()
 }

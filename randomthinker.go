@@ -35,8 +35,18 @@ func init() {
 }
 
 func parseCmdLine() (team int, serverUrl string) {
-	var teamString = flag.String("team", "RED", "The team, either 'RED' or 'BLUE'")
-	var serverUrlPtr = flag.String("serverUrl", "http://localhost:4984/checkers", "The server URL, eg: http://foo.com:4984/checkers")
+
+	var teamString = flag.String(
+		"team",
+		"RED",
+		"The team, either 'RED' or 'BLUE'",
+	)
+	var serverUrlPtr = flag.String(
+		"serverUrl",
+		"http://localhost:4984/checkers",
+		"The server URL, eg: http://foo.com:4984/checkers",
+	)
+
 	flag.Parse()
 	if *teamString == "BLUE" {
 		team = cbot.BLUE_TEAM
@@ -48,18 +58,6 @@ func parseCmdLine() (team int, serverUrl string) {
 }
 
 func main() {
-	/*
-		var team = flag.String("team", "RED", "The team, either 'RED' or 'BLUE'")
-		var serverUrl = flag.String("serverUrl", "http://localhost:4984/checkers", "The server URL, eg: http://foo.com:4984/checkers")
-		flag.Parse()
-
-
-		if team == "BLUE" {
-			thinker.ourTeamId = cbot.BLUE_TEAM
-		} else if team == "RED" {
-			thinker.ourTeamId = cbot.RED_TEAM
-		}
-	*/
 	team, serverUrl := parseCmdLine()
 	thinker := &RandomThinker{}
 	thinker.ourTeamId = team

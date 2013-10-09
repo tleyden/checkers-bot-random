@@ -1,4 +1,3 @@
-
 Example bot implementation for [checkers-bot](https://github.com/tleyden/checkers-bot) which makes random moves.
 
 # Big Picture
@@ -13,6 +12,9 @@ First you will need to [install Go 1.1](http://golang.org/doc/install) or later.
 $ go get github.com/tleyden/checkers-bot-random
 $ go get github.com/couchbaselabs/go.assert
 ```
+
+It is also possible to download the latest build of the [OSX binary](http://cbfs.hq.couchbase.com:8484/projects/checkers-bot/checkers-bot-random.mac.gz) directly.
+
 # Validate installation - run tests
 
 ```

@@ -34,15 +34,15 @@ func init() {
 	logg.LogKeys["MAIN"] = true
 }
 
-func parseCmdLine() (team int, serverUrl string) {
+func parseCmdLine() (team int, syncGatewayUrl string) {
 
 	var teamString = flag.String(
 		"team",
 		"RED",
 		"The team, either 'RED' or 'BLUE'",
 	)
-	var serverUrlPtr = flag.String(
-		"serverUrl",
+	var syncGatewayUrlPtr = flag.String(
+		"syncGatewayUrl",
 		"http://localhost:4984/checkers",
 		"The server URL, eg: http://foo.com:4984/checkers",
 	)
@@ -52,17 +52,26 @@ func parseCmdLine() (team int, serverUrl string) {
 		team = cbot.BLUE_TEAM
 	} else if *teamString == "RED" {
 		team = cbot.RED_TEAM
+	} else {
+		flag.PrintDefaults()
+		panic("Invalid command line args given")
 	}
-	serverUrl = *serverUrlPtr
+
+	if syncGatewayUrlPtr == nil {
+		flag.PrintDefaults()
+		panic("Invalid command line args given")
+	}
+
+	syncGatewayUrl = *syncGatewayUrlPtr
 	return
 }
 
 func main() {
-	team, serverUrl := parseCmdLine()
+	team, syncGatewayUrl := parseCmdLine()
 	thinker := &RandomThinker{}
 	thinker.ourTeamId = team
 	game := cbot.NewGame(thinker.ourTeamId, thinker)
-	game.SetServerUrl(serverUrl)
+	game.SetServerUrl(syncGatewayUrl)
 	game.SetDelayBeforeMove(false)
 	game.GameLoop()
 }

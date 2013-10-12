@@ -32,6 +32,14 @@ func (r RandomThinker) GameFinished(gameState cbot.GameState) (shouldQuit bool) 
 
 func init() {
 	logg.LogKeys["MAIN"] = true
+
+	// temp for debugging
+	// proxyUrl, err := url.Parse("http://localhost:8888")
+	// http.DefaultTransport = &http.Transport{Proxy: http.ProxyURL(proxyUrl)}
+	// if err != nil {
+	// 	panic("proxy issue")
+	// }
+
 }
 
 func parseCmdLine() (team int, syncGatewayUrl string) {

@@ -22,6 +22,13 @@ $ cd $GOPATH/github.com/tleyden/checkers-bot-random
 $ go test -v
 ```
 
+# Running
+
+```
+$ go build
+$ ./checkers-bot-random --team RED --syncGatewayUrl http://foo.com:4984/checkers
+```
+
 # Install other system components
 
 To get a fully working system, you'll need the following:

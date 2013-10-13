@@ -13,7 +13,7 @@ $ go get github.com/tleyden/checkers-bot-random
 $ go get github.com/couchbaselabs/go.assert
 ```
 
-It is also possible to download the latest build of the [OSX binary](http://cbfs.hq.couchbase.com:8484/projects/checkers-bot/checkers-bot-random.mac.gz) directly.
+It is also possible to download the latest build of the [OSX binary](http://cbfs-ext.hq.couchbase.com/projects/checkers-bot/checkers-bot-random.mac.gz) directly.
 
 # Validate installation - run tests
 

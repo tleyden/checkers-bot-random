@@ -52,7 +52,7 @@ func parseCmdLine() (team int, syncGatewayUrl string, proxyPort *int) {
 	)
 	proxyPort = flag.Int(
 		"proxyPort",
-		8888,
+		-1,
 		"The proxy port if you want to use a proxy",
 	)
 
@@ -80,11 +80,17 @@ func possiblyConfigureProxy(proxyPort *int) {
 	// TODO: I don't think this actually works!!  There is a bunch
 	// of traffic I'm not seeing .. and I think the go-couch library
 	// is setting up its own transport or something.
-	proxyUrlStr := fmt.Sprintf("http://localhost:%d", *proxyPort)
-	proxyUrl, err := url.Parse(proxyUrlStr)
-	http.DefaultTransport = &http.Transport{Proxy: http.ProxyURL(proxyUrl)}
-	if err != nil {
-		panic("proxy issue")
+	if *proxyPort == -1 {
+		logg.LogTo("MAIN", "No proxy port configured, not using proxy")
+	} else {
+		proxyUrlStr := fmt.Sprintf("http://localhost:%d", *proxyPort)
+		logg.LogTo("MAIN", "Connecting via proxy on port: %v", proxyUrlStr)
+		proxyUrl, err := url.Parse(proxyUrlStr)
+		http.DefaultTransport = &http.Transport{Proxy: http.ProxyURL(proxyUrl)}
+		if err != nil {
+			panic("proxy issue")
+		}
+
 	}
 
 }

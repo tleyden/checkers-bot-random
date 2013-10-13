@@ -43,7 +43,7 @@ To get a fully working system, you'll need the following:
 
 Checkers-iOS is not strictly required, but very useful in order to view the game.
 
-The other way to install [Checkers-iOS](https://github.com/couchbaselabs/Checkers-iOS) from github.  Unfortunately it is a private repo at the time of this writing.  Contact [wacarter](https://github.com/wacarter) if you are interested in getting the source code.
+The other way to install [Checkers-iOS](https://github.com/couchbaselabs/Checkers-iOS) from github.
 
 It can be installed for the [iTunes Store](https://itunes.apple.com/us/app/id698034787), however that version is only able to connect to the non-public production server.
 

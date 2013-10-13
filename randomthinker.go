@@ -2,8 +2,11 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/couchbaselabs/logg"
 	cbot "github.com/tleyden/checkers-bot"
+	"net/http"
+	"net/url"
 )
 
 type RandomThinker struct {
@@ -33,16 +36,9 @@ func (r RandomThinker) GameFinished(gameState cbot.GameState) (shouldQuit bool) 
 func init() {
 	logg.LogKeys["MAIN"] = true
 
-	// temp for debugging
-	// proxyUrl, err := url.Parse("http://localhost:8888")
-	// http.DefaultTransport = &http.Transport{Proxy: http.ProxyURL(proxyUrl)}
-	// if err != nil {
-	// 	panic("proxy issue")
-	// }
-
 }
 
-func parseCmdLine() (team int, syncGatewayUrl string) {
+func parseCmdLine() (team int, syncGatewayUrl string, proxyPort *int) {
 
 	var teamString = flag.String(
 		"team",
@@ -53,6 +49,11 @@ func parseCmdLine() (team int, syncGatewayUrl string) {
 		"syncGatewayUrl",
 		"http://localhost:4984/checkers",
 		"The server URL, eg: http://foo.com:4984/checkers",
+	)
+	proxyPort = flag.Int(
+		"proxyPort",
+		8888,
+		"The proxy port if you want to use a proxy",
 	)
 
 	flag.Parse()
@@ -74,8 +75,23 @@ func parseCmdLine() (team int, syncGatewayUrl string) {
 	return
 }
 
+func possiblyConfigureProxy(proxyPort *int) {
+	// proxy
+	// TODO: I don't think this actually works!!  There is a bunch
+	// of traffic I'm not seeing .. and I think the go-couch library
+	// is setting up its own transport or something.
+	proxyUrlStr := fmt.Sprintf("http://localhost:%d", *proxyPort)
+	proxyUrl, err := url.Parse(proxyUrlStr)
+	http.DefaultTransport = &http.Transport{Proxy: http.ProxyURL(proxyUrl)}
+	if err != nil {
+		panic("proxy issue")
+	}
+
+}
+
 func main() {
-	team, syncGatewayUrl := parseCmdLine()
+	team, syncGatewayUrl, proxyPort := parseCmdLine()
+	possiblyConfigureProxy(proxyPort)
 	thinker := &RandomThinker{}
 	thinker.ourTeamId = team
 	game := cbot.NewGame(thinker.ourTeamId, thinker)

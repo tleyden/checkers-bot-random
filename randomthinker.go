@@ -35,10 +35,10 @@ func (r RandomThinker) GameFinished(gameState cbot.GameState) (shouldQuit bool) 
 
 func init() {
 	logg.LogKeys["MAIN"] = true
-
+	logg.LogKeys["DEBUG"] = true
 }
 
-func parseCmdLine() (team int, syncGatewayUrl string, proxyPort *int) {
+func parseCmdLine() (team int, syncGatewayUrl string, proxyPort *int, feedType cbot.FeedType) {
 
 	var teamString = flag.String(
 		"team",
@@ -55,8 +55,14 @@ func parseCmdLine() (team int, syncGatewayUrl string, proxyPort *int) {
 		-1,
 		"The proxy port if you want to use a proxy",
 	)
+	var feedTypeStr = flag.String(
+		"feed",
+		"longpoll",
+		"The feed type: longpoll | normal",
+	)
 
 	flag.Parse()
+
 	if *teamString == "BLUE" {
 		team = cbot.BLUE_TEAM
 	} else if *teamString == "RED" {
@@ -69,6 +75,12 @@ func parseCmdLine() (team int, syncGatewayUrl string, proxyPort *int) {
 	if syncGatewayUrlPtr == nil {
 		flag.PrintDefaults()
 		panic("Invalid command line args given")
+	}
+
+	if *feedTypeStr == "longpoll" {
+		feedType = cbot.LONGPOLL
+	} else if *feedTypeStr == "normal" {
+		feedType = cbot.NORMAL
 	}
 
 	syncGatewayUrl = *syncGatewayUrlPtr
@@ -96,12 +108,13 @@ func possiblyConfigureProxy(proxyPort *int) {
 }
 
 func main() {
-	team, syncGatewayUrl, proxyPort := parseCmdLine()
+	team, syncGatewayUrl, proxyPort, feedType := parseCmdLine()
 	possiblyConfigureProxy(proxyPort)
 	thinker := &RandomThinker{}
 	thinker.ourTeamId = team
 	game := cbot.NewGame(thinker.ourTeamId, thinker)
 	game.SetServerUrl(syncGatewayUrl)
+	game.SetFeedType(feedType)
 	game.SetDelayBeforeMove(false)
 	game.GameLoop()
 }

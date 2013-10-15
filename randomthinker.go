@@ -35,7 +35,7 @@ func (r RandomThinker) GameFinished(gameState cbot.GameState) (shouldQuit bool) 
 
 func init() {
 	logg.LogKeys["MAIN"] = true
-	logg.LogKeys["DEBUG"] = true
+	logg.LogKeys["DEBUG"] = false
 }
 
 func parseCmdLine() (team int, syncGatewayUrl string, proxyPort *int, feedType cbot.FeedType) {

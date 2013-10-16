@@ -29,7 +29,7 @@ $ go build
 $ ./checkers-bot-random --team RED --syncGatewayUrl http://foo.com:4984/checkers
 ```
 
-# Install other system components
+# Install backend system components
 
 To get a fully working system, you'll need the following:
 
@@ -37,14 +37,25 @@ To get a fully working system, you'll need the following:
 
 * [Sync Gateway](https://github.com/couchbase/sync_gateway)
 
+OR 
+
+* [Couchbase Cloud](http://console.couchbasecloud.com/index/)
+
+AND
+
 * [Checkers Overlord](https://github.com/apage43/checkers-overlord)
 
-* [Checkers-iOS](https://github.com/couchbaselabs/Checkers-iOS)
+# Install a viewer
 
-Checkers-iOS is not strictly required, but very useful in order to view the game.
-
-The other way to install [Checkers-iOS](https://github.com/couchbaselabs/Checkers-iOS) from github.
-
-It can be installed for the [iTunes Store](https://itunes.apple.com/us/app/id698034787), however that version is only able to connect to the non-public production server.
+[Checkers-iOS](https://github.com/couchbaselabs/Checkers-iOS) is not strictly required, but very useful in order to view the game.
 
 
+# Using a proxy
+
+NOTE: if you want to use a proxy server (useful for debugging), use the following command:
+
+```
+$ http_proxy=http://10.0.0.3:8888 ./checkers-bot-random --team BLUE --syncGatewayUrl http://10.0.0.3:4984/checkers
+```
+
+where 10.0.0.3 is the address where your proxy server and sync gateway is running.  The real address must be used rather than localhost.

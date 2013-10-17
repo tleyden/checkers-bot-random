@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"github.com/couchbaselabs/logg"
 	cbot "github.com/tleyden/checkers-bot"
 )
@@ -35,52 +34,8 @@ func init() {
 	logg.LogKeys["DEBUG"] = false
 }
 
-func parseCmdLine() (team int, syncGatewayUrl string, feedType cbot.FeedType) {
-
-	var teamString = flag.String(
-		"team",
-		"NO_DEFAULT",
-		"The team, either 'RED' or 'BLUE'",
-	)
-	var syncGatewayUrlPtr = flag.String(
-		"syncGatewayUrl",
-		"http://localhost:4984/checkers",
-		"The server URL, eg: http://foo.com:4984/checkers",
-	)
-	var feedTypeStr = flag.String(
-		"feed",
-		"longpoll",
-		"The feed type: longpoll | normal",
-	)
-
-	flag.Parse()
-
-	if *teamString == "BLUE" {
-		team = cbot.BLUE_TEAM
-	} else if *teamString == "RED" {
-		team = cbot.RED_TEAM
-	} else {
-		flag.PrintDefaults()
-		panic("Invalid command line args given")
-	}
-
-	if syncGatewayUrlPtr == nil {
-		flag.PrintDefaults()
-		panic("Invalid command line args given")
-	}
-
-	if *feedTypeStr == "longpoll" {
-		feedType = cbot.LONGPOLL
-	} else if *feedTypeStr == "normal" {
-		feedType = cbot.NORMAL
-	}
-
-	syncGatewayUrl = *syncGatewayUrlPtr
-	return
-}
-
 func main() {
-	team, syncGatewayUrl, feedType := parseCmdLine()
+	team, syncGatewayUrl, feedType := cbot.ParseCmdLine()
 	thinker := &RandomThinker{}
 	thinker.ourTeamId = team
 	game := cbot.NewGame(thinker.ourTeamId, thinker)

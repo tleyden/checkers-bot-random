@@ -33,15 +33,9 @@ $ ./checkers-bot-random --team RED --syncGatewayUrl http://foo.com:4984/checkers
 
 To get a fully working system, you'll need the following:
 
-* [Couchbase Server](http://www.couchbase.com/download)
+* [Couchbase Server](http://www.couchbase.com/download) or [Kurobase hosted Couchbase Server](http://www.kurobase.com)
 
 * [Sync Gateway](https://github.com/couchbase/sync_gateway)
-
-OR 
-
-* [Couchbase Cloud](http://console.couchbasecloud.com/index/)
-
-AND
 
 * [Checkers Overlord](https://github.com/apage43/checkers-overlord)
 

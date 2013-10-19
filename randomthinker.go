@@ -6,7 +6,7 @@ import (
 )
 
 type RandomThinker struct {
-	ourTeamId int
+	ourTeamId cbot.TeamType
 }
 
 func (r RandomThinker) Think(gameState cbot.GameState) (bestMove cbot.ValidMove, ok bool) {

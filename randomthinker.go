@@ -35,12 +35,12 @@ func init() {
 }
 
 func main() {
-	team, syncGatewayUrl, feedType := cbot.ParseCmdLine()
+	checkersBotFlags := cbot.ParseCmdLine()
 	thinker := &RandomThinker{}
-	thinker.ourTeamId = team
+	thinker.ourTeamId = checkersBotFlags.Team
 	game := cbot.NewGame(thinker.ourTeamId, thinker)
-	game.SetServerUrl(syncGatewayUrl)
-	game.SetFeedType(feedType)
-	game.SetDelayBeforeMove(false)
+	game.SetServerUrl(checkersBotFlags.SyncGatewayUrl)
+	game.SetFeedType(checkersBotFlags.FeedType)
+	game.SetDelayBeforeMove(checkersBotFlags.RandomDelayBeforeMove)
 	game.GameLoop()
 }
